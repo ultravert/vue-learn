@@ -1,12 +1,17 @@
 <template>
   <div class="app">
     <h1>Страница с постами</h1>
-    <my-button
-        @click="showDialog"
-        style="margin: 15px 0;"
-    >
-      Создать пост
-    </my-button>
+    <div class="app__btns">
+      <my-button
+          @click="showDialog"
+      >
+        Создать пост
+      </my-button>
+      <my-select
+        v-model="selectedSort"
+        :options="sortOptions"
+      />
+    </div>
     <my-dialog v-model:show="dialogVisible">
       <post-form
           @create="createPost"
@@ -27,9 +32,11 @@ import PostForm from "@/components/PostForm.vue";
 import MyDialog from "@/components/UI/MyDialog.vue";
 import MyButton from "@/components/UI/MyButton.vue";
 import axios from 'axios';
+import MySelect from "@/components/UI/MySelect.vue";
 
 export default {
   components: {
+    MySelect,
     MyButton,
     MyDialog,
     PostForm,
@@ -40,6 +47,11 @@ export default {
       posts: [],
       dialogVisible: false,
       isPostLoading: false,
+      selectedSort: '',
+      sortOptions: [
+        {value: 'title', name: 'По названию'},
+        {value: 'body', name: 'По содержанию'},
+      ]
     }
   },
   methods: {
@@ -67,6 +79,13 @@ export default {
   },
   mounted() {
     this.fetchPosts();
+  },
+  watch: {
+    selectedSort(newValue) {
+      this.posts.sort((post1, post2) => {
+        return post1[newValue]?.localeCompare(post2[newValue])
+      })
+    }
   }
 }
 </script>
@@ -80,5 +99,11 @@ export default {
 
 .app {
   padding: 20px;
+}
+
+.app__btns {
+  margin: 15px 0;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
