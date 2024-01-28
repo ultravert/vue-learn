@@ -23,7 +23,11 @@
 
 <script>
 
+import MyInput from "@/components/UI/MyInput.vue";
+import MyButton from "@/components/UI/MyButton.vue";
+
 export default {
+  components: {MyButton, MyInput},
   data() {
     return {
       post: {

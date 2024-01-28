@@ -39,8 +39,10 @@ import {ref} from 'vue'
 import {usePosts} from "@/hooks/usePosts";
 import useSortedPosts from "@/hooks/useSortedPosts";
 import useSortedAndSearchedPosts from "@/hooks/useSortedAndSearchedPosts";
+import MyDialog from "@/components/UI/MyDialog.vue";
 export default {
   components: {
+    MyDialog,
     MyInput,
     MySelect,
     MyButton,
